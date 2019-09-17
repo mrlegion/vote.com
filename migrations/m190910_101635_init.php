@@ -28,6 +28,7 @@ class m190910_101635_init extends Migration
             'username' => $this->string(50)->notNull(),
             'password_hash' => $this->string(255)->notNull(),
             'access_token' => $this->string(255)->notNull(),
+            'verify_token' => $this->string(255)->notNull(),
             'email' => $this->string(100)->null(),
             'is_blocked' => $this->integer(1)->notNull()->defaultValue(0),
             'created_at' => $this->date()->notNull(),

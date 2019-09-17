@@ -20,12 +20,15 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+        'css/normalize.min.css',
+        'css/bootstrap-grid.min.css',
+        'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&amp;display=swap',
+        'css/style.min.css',
     ];
     public $js = [
+        'js/jquery.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
     ];
 }

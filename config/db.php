@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=voitester',
+    'dsn' => 'mysql:host=localhost;dbname=vote',
     'username' => 'app',
     'password' => 'password',
     'charset' => 'utf8',
