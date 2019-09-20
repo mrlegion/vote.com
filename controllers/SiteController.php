@@ -77,47 +77,14 @@ class SiteController extends Controller
      */
     public function actionRegister(): string
     {
-        $model = null;
-        return $this->render('register', compact('model'));
+        return $this->render('register');
     }
 
     public function actionFound()
     {
-        $model = $this->get_json([]);
+        $model = Yii::$app->request->get('model');
 
-        foreach ($model[0]->children as $child) {
-            // get info
-        }
-
-        return $this->render('found', compact('model', 'three'));
-    }
-
-    function normJsonStr($str){
-        $str = preg_replace_callback('/\\\\u([a-f0-9]{4})/i', create_function('$m', 'return chr(hexdec($m[1])-1072+224);'), $str);
-        return iconv('cp1251', 'utf-8', $str);
-    }
-
-    function get_json(array $post, $useGet = false) {
-        //get json
-        $connection = curl_init();
-        $url = 'http://cikrf.ru/services/lk_tree/';
-        if ($useGet) {
-            $url .= '?';
-            foreach ($post as $key => $value)
-                $url .= $key . '=' . $value . '&';
-            $url = rtrim($url, '&');
-        }
-        curl_setopt($connection, CURLOPT_URL, $url);
-        if (!$useGet)
-            curl_setopt($connection, CURLOPT_POSTFIELDS, $post);
-        curl_setopt($connection, CURLOPT_RETURNTRANSFER, 1); // return the result, do not print
-        curl_setopt($connection, CURLOPT_TIMEOUT, 20);
-
-        $json_return = $this->normJsonStr(curl_exec($connection));
-
-        curl_close($connection);
-
-        return json_decode($json_return);
+        return $this->render('found', compact('model'));
     }
 
 

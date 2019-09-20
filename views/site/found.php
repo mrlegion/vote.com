@@ -21,7 +21,16 @@ $this->title = "Поиск кандидата по участку";
         <div class="row">
             <div class="col-12">
                 <h1>Поиск кандидата</h1>
-                <pre><?= print_r($three, true) ?></pre>
+            </div>
+            <div class="col">
+                <p>
+                    По вашему адресу: <b><?= $model['region'] ?>, <?= $model['city'] ?>, <?= $model['street'] ?>, <?= $model['home'] ?></b> не найдено ни одного кандидата!
+                </p>
+            </div>
+        </div>
+        <div class="row mt-20">
+            <div class="col">
+                <?= Html::a('Вернуться на главную', 'index', ['class' => 'button button--outline button--outline_red']) ?>
             </div>
         </div>
     </div>

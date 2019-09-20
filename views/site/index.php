@@ -8,6 +8,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this View */
 /* @var $model FoundForm */
+
 $this->title = "Разумное голосование! Голосуй с умом!"
 ?>
 
@@ -30,7 +31,7 @@ $this->title = "Разумное голосование! Голосуй с ум�
                     которого нужно поддержать. Это будет лучший выбор из всех возможных, сделанный на основе
                     многофакторного анализа.
                 </p>
-                <?= Html::a('Зарегистрироваться', 'site/register', ['class' => 'button button--blue button--lg header__button']) ?>
+                <?= Html::a('Зарегистрироваться', '/site/register', ['class' => 'button button--blue button--lg header__button']) ?>
             </div>
         </div>
     </div>
@@ -48,26 +49,26 @@ $this->title = "Разумное голосование! Голосуй с ум�
                 <p class="found__text">
                     Чтобы дать вам рекомендацию, за кого голосовать, нам нужно узнать ваш округ.<br> Для этого укажите,
                     пожалуйста, свой адрес регистрации.</p>
-                <?php $form = ActiveForm::begin() ?>
+                <?php $form = ActiveForm::begin(['options' => ['class' => 'ta-left']]) ?>
                     <div class="row">
                         <div class="col-sm-6">
-                            <?= $form->field($model, 'region')->textInput(['class' => 'form__input', 'placeholder' => $model->getAttributeLabel('region')])->label(false) ?>
+                            <?= $form->field($model, 'region')->textInput(['class' => 'form__input', 'id' => 'region', 'placeholder' => $model->getAttributeLabel('region')])->label(false) ?>
                         </div>
                         <div class="col-sm-6">
-                            <?= $form->field($model, 'city')->textInput(['class' => 'form__input', 'placeholder' => $model->getAttributeLabel('city')])->label(false) ?>
+                            <?= $form->field($model, 'city')->textInput(['class' => 'form__input', 'id' => 'city', 'placeholder' => $model->getAttributeLabel('city')])->label(false) ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <?= $form->field($model, 'street')->textInput(['class' => 'form__input', 'placeholder' => $model->getAttributeLabel('street')])->label(false) ?>
+                            <?= $form->field($model, 'street')->textInput(['class' => 'form__input', 'id' => 'street', 'placeholder' => $model->getAttributeLabel('street')])->label(false) ?>
                         </div>
                         <div class="col-sm-6">
-                            <?= $form->field($model, 'home')->textInput(['class' => 'form__input', 'placeholder' => $model->getAttributeLabel('home')])->label(false) ?>
+                            <?= $form->field($model, 'home')->textInput(['class' => 'form__input', 'id' => 'home',  'placeholder' => $model->getAttributeLabel('home')])->label(false) ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <?= Html::submitButton('Найти', ['class' => 'button button--red form__button']) ?>
+                            <?= Html::submitButton('Найти', ['class' => 'button button--red form__button fright']) ?>
                         </div>
                     </div>
                 <?php ActiveForm::end() ?>
@@ -82,3 +83,12 @@ $this->title = "Разумное голосование! Голосуй с ум�
         </div>
     </div>
 </section>
+
+<?php
+$jsAddress = <<<JS
+
+
+JS;
+
+$this->registerJs($jsAddress, View::POS_END);
+?>

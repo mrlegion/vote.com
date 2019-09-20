@@ -23,10 +23,13 @@ class AppAsset extends AssetBundle
         'css/normalize.min.css',
         'css/bootstrap-grid.min.css',
         'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&amp;display=swap',
+        'https://cdn.jsdelivr.net/npm/suggestions-jquery@19.8.0/dist/css/suggestions.min.css',
         'css/style.min.css',
     ];
     public $js = [
-        'js/jquery.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
+        'https://cdn.jsdelivr.net/npm/suggestions-jquery@19.8.0/dist/js/jquery.suggestions.min.js',
+        'js/common.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

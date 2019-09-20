@@ -73,6 +73,22 @@
     margin-bottom: 20px
 }
 
+.ta-right {
+    text-align: right;
+}
+
+.ta-left {
+    text-align: left;
+}
+
+.fleft {
+    float: left;
+}
+
+.fright {
+    float: right;
+}
+
 .top__logo {
     display: inline-block;
     cursor: pointer;
@@ -140,6 +156,10 @@
 .found-content {
     text-align: right;
     position: relative
+}
+
+#found__form {
+    text-align: left;
 }
 
 .found__title {
