@@ -1,5 +1,7 @@
 <?php
 
+use yii\i18n\PhpMessageSource;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -16,6 +18,15 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Ku7boER0Of_Q4tgbULDtdeHp7Skke43A',
             'baseUrl' => '',
+        ],
+        'i18n' => [
+            'translations' => [
+                'app' => [
+                    'class' => PhpMessageSource::class,
+                    'basePath' => '@app/localization/',
+                    'sourceLanguage' => 'ru',
+                ],
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

@@ -16,7 +16,7 @@ class m190910_101635_init extends Migration
             'id' => $this->primaryKey(),
             'phone' => $this->string(13)->notNull(),
             'email' => $this->string(255)->notNull(),
-            'birthday' => $this->date()->notNull(),
+            'age' => $this->string(50)->notNull(),
             'state' => $this->string(100)->notNull(),
             'city' => $this->string(100)->notNull(),
             'street' => $this->string(100)->notNull(),

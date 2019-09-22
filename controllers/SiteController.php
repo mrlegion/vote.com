@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\FoundForm;
+use app\models\RegisterForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -77,7 +78,8 @@ class SiteController extends Controller
      */
     public function actionRegister(): string
     {
-        return $this->render('register');
+        $model = new RegisterForm();
+        return $this->render('register', compact('model'));
     }
 
     public function actionFound()
