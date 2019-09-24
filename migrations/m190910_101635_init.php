@@ -21,6 +21,8 @@ class m190910_101635_init extends Migration
             'city' => $this->string(100)->notNull(),
             'street' => $this->string(100)->notNull(),
             'home' => $this->string(20)->notNull(),
+            'email_confirm_token' => $this->string()->unique()->notNull(),
+            'status' => $this->smallInteger()->notNull()->defaultValue(0)
         ]);
 
         $this->createTable('{{%admin}}', [

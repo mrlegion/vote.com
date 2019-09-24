@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
         'css/normalize.min.css',
         'css/bootstrap-grid.min.css',
         'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&amp;display=swap',
+        'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
         'https://cdn.jsdelivr.net/npm/suggestions-jquery@19.8.0/dist/css/suggestions.min.css',
         'css/style.min.css',
     ];

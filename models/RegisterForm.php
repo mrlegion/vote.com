@@ -37,6 +37,9 @@ class RegisterForm extends Model
 
     public $accept;
 
+    private $user;
+    private $vote;
+
     public function rules()
     {
         return [
@@ -73,21 +76,22 @@ class RegisterForm extends Model
      */
     public function save() : bool
     {
-        $user = new User();
-        $vote = new Vote();
+        $this->user = new User();
+        $this->vote = new Vote();
 
         $user_transaction = User::getDb()->beginTransaction();
         $vote_transaction = Vote::getDb()->beginTransaction();
 
         try {
             // load data
-            if ($user->load($this->getUserArray())) {
-                if ($vote->load($this->getVoteArray())) {
-                    if ($user->save()) {
-                        $vote->user_id = $user->id;
-                        if ($vote->save()) {
+            if ($this->user->load($this->getUserArray())) {
+                if ($this->vote->load($this->getVoteArray())) {
+                    if ($this->user->save()) {
+                        $this->vote->user_id = $this->user->id;
+                        if ($this->vote->save()) {
                             $user_transaction->commit();
                             $vote_transaction->commit();
+                            $this->user->sendConfirmEmail();
                             return true;
                         }
                     }
@@ -108,8 +112,9 @@ class RegisterForm extends Model
     /**
      * Get array params for User model
      * @return array
+     * @throws \yii\base\Exception
      */
-    private function getUserArray() : array
+    public function getUserArray() : array
     {
         return [
             'User' => [
@@ -120,6 +125,8 @@ class RegisterForm extends Model
                 'street'    => $this->street,
                 'home'      => $this->home,
                 'age'       => $this->age,
+                'email_confirm_token' => Yii::$app->security->generateRandomString(),
+                'status'    => User::STATUS_WAIT,
             ],
         ];
     }
@@ -128,7 +135,7 @@ class RegisterForm extends Model
      * Get array params for Vote model
      * @return array
      */
-    private function getVoteArray() : array
+    public function getVoteArray() : array
     {
         return [
             'Vote' => [
@@ -136,6 +143,11 @@ class RegisterForm extends Model
                 'ratio' => $this->ratio,
             ],
         ];
+    }
+
+    public function getUser()
+    {
+        return $this->user;
     }
 }
 

@@ -24,7 +24,13 @@ return [
     'Sign up' => 'Зарегистрируйтесь',
     'Cancel' => 'Отмена',
     'Accept' => 'Принимаю',
+    'Status' => 'Статус',
+    'Return to site' => 'Вернуться на сайт',
+    'Repeating send' => 'Отправить еще раз',
+    'Email confirmed token' => 'Токен подтверждения электронной почты',
     'Do you know your deputy? If yes, then write who he is:' => 'Знаете ли Вы своего депутата? Если да, то напишите, кто он:',
     'A certain description of the deputy in all colors' => 'Некое описание депутата во всех красках',
+    'Thank you!<br> Your mail has been confirmed.' => 'Спасибо!<br>Ваша почта подтверждена',
+    'Thank you for successfully confirming the mail and joining the "Reasonable Voting".<br>At the right time, we will write you which candidate is worth voting for.' => 'Спасибо, что успешно подтвердили почту и присоединились к «Разумному голосованию». <br>В нужный момент мы напишем вам, за какого кандидата стоит проголосовать.',
     '' => '',
 ];

@@ -15,6 +15,8 @@ use Yii;
  * @property string $city
  * @property string $street
  * @property string $home
+ * @property string $email_confirm_token
+ * @property integer $status
  *
  * @property Vote[] $votes
  */
@@ -29,6 +31,11 @@ class User extends \yii\db\ActiveRecord
         '6' => '50-59',
         '7' => '60+',
     ];
+
+    const STATUS_ACTIVE = 6;
+    const STATUS_WAIT = 5;
+    const STATUS_UNACTIVE = 0;
+    const STATUS_DELETED = 9;
 
     /**
      * {@inheritdoc}
@@ -50,6 +57,8 @@ class User extends \yii\db\ActiveRecord
             [['age'], 'string', 'max' => 50],
             [['state', 'city', 'street'], 'string', 'max' => 100],
             [['home'], 'string', 'max' => 20],
+            ['email_confirm_token', 'string', 'max' => 255],
+            ['status', 'in', 'range' => [self::STATUS_UNACTIVE, self::STATUS_ACTIVE, self::STATUS_WAIT, self::STATUS_DELETED]]
         ];
     }
 
@@ -67,6 +76,8 @@ class User extends \yii\db\ActiveRecord
             'city' => Yii::t('app', 'City'),
             'street' => Yii::t('app', 'Street'),
             'home' => Yii::t('app', 'Home'),
+            'status' => Yii::t('app','Status'),
+            'email_confirm_token' => Yii::t('app','Email confirmed token'),
         ];
     }
 
@@ -76,5 +87,22 @@ class User extends \yii\db\ActiveRecord
     public function getVotes()
     {
         return $this->hasMany(Vote::class, ['user_id' => 'id']);
+    }
+
+    public static function findByEmail($email)
+    {
+        return self::findOne(['email' => $email]);
+    }
+
+    public function sendConfirmEmail()
+    {
+        $send = Yii::$app->mailer
+            ->compose(['html' => 'verify'],['user' => $this])
+            ->setTo($this->email)
+            ->setFrom(Yii::$app->params['adminEmail'])
+            ->setSubject('Подтверждение регистрации')
+            ->send();
+        if (!$send)
+            throw new \RuntimeException('Send mail error');
     }
 }

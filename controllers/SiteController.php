@@ -4,8 +4,10 @@ namespace app\controllers;
 
 use app\models\FoundForm;
 use app\models\RegisterForm;
+use app\models\RegisterService;
 use app\models\User;
 use app\models\Vote;
+use RuntimeException;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -78,15 +80,21 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionRegister(): string
+    public function actionRegister()
     {
-        $user = new User();
-        $vote = new Vote();
         $model = new RegisterForm();
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
-                if ($model->save()) {
-                    return $this->redirect('/site/index');
+                $service = new RegisterService();
+
+                try {
+                    $user = $service->singup($model);
+                    Yii::$app->session->setFlash('success', 'Check your email to confirm the registration.');
+                    $service->sendEmail($user);
+                    return $this->redirect(['site/register-success', 'email' => $model->email]);
+                } catch (RuntimeException $e) {
+                    Yii::$app->errorHandler->logException($e);
+                    Yii::$app->session->setFlash('error', $e->getMessage());
                 }
             }
         }
@@ -98,6 +106,23 @@ class SiteController extends Controller
         $model = Yii::$app->request->get('model');
 
         return $this->render('found', compact('model'));
+    }
+
+    public function actionEmailConfirm($token)
+    {
+        $service = new RegisterService();
+        try {
+            $service->confirmation($token);
+        } catch (RuntimeException $e) {
+            Yii::$app->errorHandler->logException($e);
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->render('email-confirm');
+    }
+
+    public function actionRegisterSuccess()
+    {
+        return $this->render('success', ['email' => Yii::$app->request->get('email')]);
     }
 
 
