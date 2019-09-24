@@ -21,5 +21,10 @@ return [
     'City' => 'Населенный пункт',
     'Street' => 'Улица',
     'Home' => 'Дом',
+    'Sign up' => 'Зарегистрируйтесь',
+    'Cancel' => 'Отмена',
+    'Accept' => 'Принимаю',
+    'Do you know your deputy? If yes, then write who he is:' => 'Знаете ли Вы своего депутата? Если да, то напишите, кто он:',
+    'A certain description of the deputy in all colors' => 'Некое описание депутата во всех красках',
     '' => '',
 ];

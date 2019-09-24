@@ -20,6 +20,16 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord
 {
+    const AGES = [
+        '1' => 'Less 18',
+        '2' => '18-24',
+        '3' => '25-29',
+        '4' => '30-39',
+        '5' => '40-49',
+        '6' => '50-59',
+        '7' => '60+',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +45,7 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['phone', 'email', 'age', 'state', 'city', 'street', 'home'], 'required'],
-            [['phone'], 'string', 'max' => 13],
+            [['phone'], 'string', 'max' => 20],
             [['email'], 'string', 'max' => 255],
             [['age'], 'string', 'max' => 50],
             [['state', 'city', 'street'], 'string', 'max' => 100],

@@ -9,6 +9,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'ru',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -24,7 +25,12 @@ $config = [
                 'app' => [
                     'class' => PhpMessageSource::class,
                     'basePath' => '@app/localization/',
-                    'sourceLanguage' => 'ru',
+                    'sourceLanguage' => 'en',
+                ],
+                'site' => [
+                    'class' => PhpMessageSource::class,
+                    'basePath' => '@app/localization/',
+                    'sourceLanguage' => 'en',
                 ],
             ],
         ],

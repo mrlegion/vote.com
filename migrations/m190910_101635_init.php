@@ -14,7 +14,7 @@ class m190910_101635_init extends Migration
     {
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-            'phone' => $this->string(13)->notNull(),
+            'phone' => $this->string(20)->notNull(),
             'email' => $this->string(255)->notNull(),
             'age' => $this->string(50)->notNull(),
             'state' => $this->string(100)->notNull(),

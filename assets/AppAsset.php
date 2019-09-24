@@ -27,11 +27,12 @@ class AppAsset extends AssetBundle
         'css/style.min.css',
     ];
     public $js = [
-        'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
+        //'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
         'https://cdn.jsdelivr.net/npm/suggestions-jquery@19.8.0/dist/js/jquery.suggestions.min.js',
         'js/common.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
+
     ];
 }

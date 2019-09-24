@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\FoundForm;
 use app\models\RegisterForm;
+use app\models\User;
+use app\models\Vote;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -78,7 +80,16 @@ class SiteController extends Controller
      */
     public function actionRegister(): string
     {
+        $user = new User();
+        $vote = new Vote();
         $model = new RegisterForm();
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->save()) {
+                    return $this->redirect('/site/index');
+                }
+            }
+        }
         return $this->render('register', compact('model'));
     }
 
