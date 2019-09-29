@@ -84,7 +84,7 @@ class SiteController extends Controller
     {
         $model = new RegisterForm();
         if (Yii::$app->request->isPost) {
-            if ($model->load(Yii::$app->request->post())) {
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 $service = new RegisterService();
 
                 try {

@@ -63,4 +63,20 @@ $(document).ready(function () {
         bounds: "house",
         constraints: $street
     });
+
+    $('.help-block').each(function () {
+        if ($(this).html() != '') {
+            $(this).css('display', 'inline-block');
+        } else {
+            $(this).css('display', 'none');
+        }
+    });
+
+    $('.help-block').bind('DOMSubtreeModified', function() {
+        if ($(this).html() != '') {
+            $(this).css('display', 'inline-block');
+        } else {
+            $(this).css('display', 'none');
+        }
+    })
 });

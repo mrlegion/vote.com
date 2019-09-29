@@ -68,16 +68,16 @@ class User extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'phone' => Yii::t('app', 'Phone'),
-            'email' => Yii::t('app', 'Email'),
-            'age' => Yii::t('app', 'Age'),
-            'state' => Yii::t('app', 'State'),
-            'city' => Yii::t('app', 'City'),
-            'street' => Yii::t('app', 'Street'),
-            'home' => Yii::t('app', 'Home'),
-            'status' => Yii::t('app','Status'),
-            'email_confirm_token' => Yii::t('app','Email confirmed token'),
+            'id'                    => Yii::t('app', 'ID'),
+            'phone'                 => Yii::t('app', 'Phone'),
+            'email'                 => Yii::t('app', 'Email'),
+            'age'                   => Yii::t('app', 'Age'),
+            'state'                 => Yii::t('app', 'State'),
+            'city'                  => Yii::t('app', 'City'),
+            'street'                => Yii::t('app', 'Street'),
+            'home'                  => Yii::t('app', 'Home'),
+            'status'                => Yii::t('app','Status'),
+            'email_confirm_token'   => Yii::t('app','Email confirmed token'),
         ];
     }
 
@@ -94,15 +94,8 @@ class User extends \yii\db\ActiveRecord
         return self::findOne(['email' => $email]);
     }
 
-    public function sendConfirmEmail()
+    public static function findByEmailToken($token)
     {
-        $send = Yii::$app->mailer
-            ->compose(['html' => 'verify'],['user' => $this])
-            ->setTo($this->email)
-            ->setFrom(Yii::$app->params['adminEmail'])
-            ->setSubject('Подтверждение регистрации')
-            ->send();
-        if (!$send)
-            throw new \RuntimeException('Send mail error');
+        return self::findOne(['email_confirm_token' => $token]);
     }
 }

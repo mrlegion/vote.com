@@ -37,15 +37,16 @@ class RegisterForm extends Model
 
     public $accept;
 
-    private $user;
-    private $vote;
-
     public function rules()
     {
         return [
             [['email', 'phone', 'state', 'city', 'street', 'home', 'accept'], 'required'],
+            ['accept', 'boolean'],
+            ['accept', 'checkAcceptTeam'],
             ['phone', 'string', 'max' => 20],
             ['email', 'string', 'max' => 255],
+            ['email', 'email'],
+            [['email', 'phone', 'state', 'city', 'street', 'home'], 'trim'],
             ['age', 'string', 'max' => 50],
             [['state', 'city', 'street'], 'string', 'max' => 100],
             ['home', 'string', 'max' => 20],
@@ -53,6 +54,13 @@ class RegisterForm extends Model
             ['text', 'string'],
             ['text', 'safe'],
         ];
+    }
+
+    public function checkAcceptTeam($attribute, $params)
+    {
+        if (!$this->accept) {
+            $this->addError($attribute, Yii::t('app','It is necessary to accept consent to the processing of personal data'));
+        }
     }
 
     public function attributeLabels()
@@ -70,44 +78,7 @@ class RegisterForm extends Model
         ];
     }
 
-    /**
-     * Save form in DB
-     * @return bool
-     */
-    public function save() : bool
-    {
-        $this->user = new User();
-        $this->vote = new Vote();
 
-        $user_transaction = User::getDb()->beginTransaction();
-        $vote_transaction = Vote::getDb()->beginTransaction();
-
-        try {
-            // load data
-            if ($this->user->load($this->getUserArray())) {
-                if ($this->vote->load($this->getVoteArray())) {
-                    if ($this->user->save()) {
-                        $this->vote->user_id = $this->user->id;
-                        if ($this->vote->save()) {
-                            $user_transaction->commit();
-                            $vote_transaction->commit();
-                            $this->user->sendConfirmEmail();
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            $user_transaction->rollBack();
-            $vote_transaction->rollBack();
-            return false;
-
-        } catch (\Exception $e) {
-            $user_transaction->rollBack();
-            $vote_transaction->rollBack();
-            return false;
-        }
-    }
 
     /**
      * Get array params for User model
@@ -143,11 +114,6 @@ class RegisterForm extends Model
                 'ratio' => $this->ratio,
             ],
         ];
-    }
-
-    public function getUser()
-    {
-        return $this->user;
     }
 }
 

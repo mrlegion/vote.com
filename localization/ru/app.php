@@ -32,5 +32,6 @@ return [
     'A certain description of the deputy in all colors' => 'Некое описание депутата во всех красках',
     'Thank you!<br> Your mail has been confirmed.' => 'Спасибо!<br>Ваша почта подтверждена',
     'Thank you for successfully confirming the mail and joining the "Reasonable Voting".<br>At the right time, we will write you which candidate is worth voting for.' => 'Спасибо, что успешно подтвердили почту и присоединились к «Разумному голосованию». <br>В нужный момент мы напишем вам, за какого кандидата стоит проголосовать.',
+    'It is necessary to accept consent to the processing of personal data' => 'Необходимо принять согласие на обработку персональных данных',
     '' => '',
 ];

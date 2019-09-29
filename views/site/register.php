@@ -24,6 +24,23 @@ $this->title = "Регистрация в разумном голосовани�
         </div>
     </div>
 </section>
+
+<?php if (Yii::$app->session->hasFlash('error')) : ?>
+<section class="alert">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="alert-block alert-danger">
+                    <h2><?= Yii::t('app', 'Error on registration') ?></h2>
+                    <p><?= Yii::$app->session->getFlash('error') ?></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<?php endif; ?>
+
 <section class="registration">
     <div class="container">
         <div class="row">
@@ -68,7 +85,7 @@ $this->title = "Регистрация в разумном голосовани�
                             <?= $form->field($model, 'state')->textInput([
                                 'class' => 'form__input',
                                 'id' => 'region',
-                                'placeholder' => Yii::t('app', 'Region')
+                                'placeholder' => Yii::t('app', 'State')
                             ])->label(false) ?>
                         </div>
                         <div class="col">
@@ -144,13 +161,29 @@ HTML;
                     <div class="row mt-20 mb-20">
                         <div class="col-12">
                             <div class="form-group">
-                                <label class="form__checkbox" for="team_and_policy">
-                                    <input id="team_and_policy" type="checkbox" name="team_and_policy"/>
+                                <?= $form->field($model, 'accept', [
+                                    'template' => '<label class="form__checkbox" for="team_and_policy">
+                                        {input}
+                                        <div class="form__checkbox--custom"></div>
+                                        <span>Я даю согласие на обработку моих персональных данных в объеме и на условиях, определенных
+                                        <a href="#">Положением</a> и <a href="#">офертой</a></span>
+                                        </label>
+                                        <div>{error}</div>'
+                                ])->checkbox([
+                                    'label' => false,
+                                    'value' => 0,
+                                    'unchecked' => 0,
+                                    'checked' => $model->accept ? true : false,
+                                    'id' => 'team_and_policy',
+                                ]) ?>
+                                <!--<label class="form__checkbox" for="team_and_policy">
+                                    <input id="team_and_policy" type="checkbox" name="RegisterForm[accept]"/>
                                     <div class="form__checkbox--custom"></div>
                                     <span>
-                        Я даю согласие на обработку моих персональных данных в объеме и на условиях, определенных <a
-                                                href="#">Положением</a> и <a href="#">офертой</a></span>
-                                </label>
+                                        Я даю согласие на обработку моих персональных данных в объеме и на условиях, определенных
+                                        <a href="#">Положением</a> и <a href="#">офертой</a>
+                                    </span>
+                                </label>-->
                             </div>
                         </div>
                     </div>
@@ -162,3 +195,15 @@ HTML;
         <?php ActiveForm::end(); ?>
     </div>
 </section>
+
+<?php
+$js = <<<JS
+let policy = document.querySelector('#team_and_policy[type="checkbox"]');
+if (policy) {
+    policy.addEventListener('change', function() {
+        this.value = (Number(this.checked));
+    });
+}
+JS;
+$this->registerJs($js, View::POS_READY);
+?>
